@@ -15,30 +15,42 @@ func randInt(max int, min int) int {
 	return random_number
 }
 
-func game() {
-	fmt.Println("What is the winning score you want to have?")
-	fmt.Scanln(&winningScore)
-
-	for (playerScore < winningScore) && (computerScore < winningScore) {
+func getPlayerChoice() string {
+	for {
 		fmt.Println("\nPick (R)ock, (P)aper, (S)cissors: ")
 		fmt.Scanln(&playerChoice)
 		strings.ToLower(playerChoice)
 
-		randomNumber := randInt(100, 1)
-
-		if randomNumber <= 33 {
-			computerChoice = "r"
-		} else if randomNumber <= 66 {
-			computerChoice = "p"
-		} else {
-			computerChoice = "s"
+		switch playerChoice {
+		case "r":
+			break
+		case "p":
+			break
+		case "s":
+			break
+		default:
+			continue
 		}
 
-		determineWinner(playerChoice, computerChoice)
+		return playerChoice
 	}
 }
 
-func determineWinner(playerChoice string, computerChoice string) bool {
+func getComputerChoice() string {
+	randomNumber := randInt(100, 1)
+
+	if randomNumber <= 33 {
+		computerChoice = "r"
+	} else if randomNumber <= 66 {
+		computerChoice = "p"
+	} else {
+		computerChoice = "s"
+	}
+
+	return computerChoice
+}
+
+func compareChoices() {
 	if strings.Compare(playerChoice, computerChoice) == 0 {
 		fmt.Printf("Tie!\nYou both picked %s!\n", playerChoice)
 	} else {
@@ -62,7 +74,9 @@ func determineWinner(playerChoice string, computerChoice string) bool {
 			computerScore++
 		}
 	}
+}
 
+func determineWinner() bool {
 	if computerScore == winningScore || playerScore == winningScore {
 		fmt.Printf("Final Score:\n\nPlayer: %d\nComputer: %d\n\n", playerScore, computerScore)
 		if computerScore > playerScore {
@@ -74,6 +88,18 @@ func determineWinner(playerChoice string, computerChoice string) bool {
 	} else {
 		fmt.Printf("Score:\n\nPlayer: %d\nComputer: %d\n\n", playerScore, computerScore)
 		return true
+	}
+}
+
+func game() {
+	fmt.Println("What is the winning score you want to have?")
+	fmt.Scanln(&winningScore)
+
+	for (playerScore < winningScore) && (computerScore < winningScore) {
+		playerChoice = getPlayerChoice()
+		computerChoice = getComputerChoice()
+		compareChoices()
+		determineWinner()
 	}
 }
 
