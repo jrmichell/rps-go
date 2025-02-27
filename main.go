@@ -6,6 +6,12 @@ import (
 	"strings"
 )
 
+const (
+	ROCK     = "r"
+	PAPER    = "p"
+	SCISSORS = "s"
+)
+
 var playerScore, computerScore int = 0, 0
 var playerChoice, computerChoice string
 var winningScore int
@@ -22,11 +28,11 @@ func getPlayerChoice() string {
 		strings.ToLower(playerChoice)
 
 		switch playerChoice {
-		case "r":
+		case ROCK:
 			break
-		case "p":
+		case PAPER:
 			break
-		case "s":
+		case SCISSORS:
 			break
 		default:
 			continue
@@ -40,11 +46,11 @@ func getComputerChoice() string {
 	randomNumber := randInt(100, 1)
 
 	if randomNumber <= 33 {
-		computerChoice = "r"
+		computerChoice = ROCK
 	} else if randomNumber <= 66 {
-		computerChoice = "p"
+		computerChoice = PAPER
 	} else {
-		computerChoice = "s"
+		computerChoice = SCISSORS
 	}
 
 	return computerChoice
@@ -52,25 +58,28 @@ func getComputerChoice() string {
 
 func compareChoices() {
 	if strings.Compare(playerChoice, computerChoice) == 0 {
-		fmt.Printf("Tie!\nYou both picked %s!\n", playerChoice)
+		fmt.Printf("\nTie! You both picked %s!\n", playerChoice)
 	} else {
 		fmt.Printf("You picked %s, Computer picked %s\n", playerChoice, computerChoice)
 
-		if computerChoice == "r" && playerChoice == "p" {
+		if computerChoice == ROCK && playerChoice == PAPER {
 			playerScore++
-		} else if computerChoice == "p" && playerChoice == "r" {
+		}
+		if computerChoice == PAPER && playerChoice == ROCK {
 			computerScore++
 		}
 
-		if computerChoice == "p" && playerChoice == "s" {
+		if computerChoice == PAPER && playerChoice == SCISSORS {
 			playerScore++
-		} else if computerChoice == "s" && playerChoice == "p" {
+		}
+		if computerChoice == SCISSORS && playerChoice == PAPER {
 			computerScore++
 		}
 
-		if computerChoice == "s" && playerChoice == "r" {
+		if computerChoice == SCISSORS && playerChoice == ROCK {
 			playerScore++
-		} else if computerChoice == "r" && playerChoice == "s" {
+		}
+		if computerChoice == ROCK && playerChoice == SCISSORS {
 			computerScore++
 		}
 	}
@@ -86,7 +95,7 @@ func determineWinner() bool {
 		}
 		return false
 	} else {
-		fmt.Printf("Score:\n\nPlayer: %d\nComputer: %d\n\n", playerScore, computerScore)
+		fmt.Printf("\nPlayer: %d\nComputer: %d\n", playerScore, computerScore)
 		return true
 	}
 }
@@ -96,8 +105,8 @@ func game() {
 	fmt.Scanln(&winningScore)
 
 	for (playerScore < winningScore) && (computerScore < winningScore) {
-		playerChoice = getPlayerChoice()
-		computerChoice = getComputerChoice()
+		getPlayerChoice()
+		getComputerChoice()
 		compareChoices()
 		determineWinner()
 	}
