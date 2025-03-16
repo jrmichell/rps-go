@@ -16,14 +16,15 @@ var playerScore, computerScore int = 0, 0
 var playerChoice, computerChoice string
 var winningScore int
 
-func randInt(max int, min int) int {
+func randInt(min int, max int) int {
 	random_number := rand.Intn(max-min+1) + min
 	return random_number
 }
 
 func getPlayerChoice() string {
+	fmt.Println("\nPick (R)ock, (P)aper, (S)cissors: ")
+
 	for {
-		fmt.Println("\nPick (R)ock, (P)aper, (S)cissors: ")
 		fmt.Scanln(&playerChoice)
 		strings.ToLower(playerChoice)
 
@@ -35,6 +36,7 @@ func getPlayerChoice() string {
 		case SCISSORS:
 			break
 		default:
+			fmt.Println("\nPlease pick a valid option - (R)ock, (P)aper, (S)cissors: ")
 			continue
 		}
 
@@ -43,7 +45,7 @@ func getPlayerChoice() string {
 }
 
 func getComputerChoice() string {
-	randomNumber := randInt(100, 1)
+	randomNumber := randInt(1, 100)
 
 	if randomNumber <= 33 {
 		computerChoice = ROCK
@@ -86,8 +88,8 @@ func compareChoices() {
 }
 
 func determineWinner() bool {
+	fmt.Printf("\nPlayer: %d\nComputer: %d\n\n", playerScore, computerScore)
 	if computerScore == winningScore || playerScore == winningScore {
-		fmt.Printf("Final Score:\n\nPlayer: %d\nComputer: %d\n\n", playerScore, computerScore)
 		if computerScore > playerScore {
 			fmt.Println("Computer Wins!")
 		} else if playerScore > computerScore {
@@ -95,7 +97,6 @@ func determineWinner() bool {
 		}
 		return false
 	} else {
-		fmt.Printf("\nPlayer: %d\nComputer: %d\n", playerScore, computerScore)
 		return true
 	}
 }
